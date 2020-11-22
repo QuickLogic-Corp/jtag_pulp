@@ -53,7 +53,7 @@ module tap_top (
   capture_dr_o,
 
   // Select signals for boundary scan or mbist
-  memory_sel_o,
+  axireg_sel_o,
   fifo_sel_o,
   confreg_sel_o,
   clk_byp_sel_o,
@@ -63,7 +63,7 @@ module tap_top (
   scan_in_o,
 
   // TDI signals from sub-modules
-  memory_out_i,     // from reg1 module
+  axireg_out_i,     // from reg1 module
   fifo_out_i,       // from reg2 module
   confreg_out_i,     // from reg3 module
   clk_byp_out_i,
@@ -85,7 +85,7 @@ output  update_dr_o;
 output  capture_dr_o;
 
 // Select signals for boundary scan or mbist
-output  memory_sel_o;
+output  axireg_sel_o;
 output  fifo_sel_o;
 output  confreg_sel_o;
 output  clk_byp_sel_o;
@@ -95,7 +95,7 @@ output  observ_sel_o;
 output  scan_in_o;
 
 // TDI signals from sub-modules
-input   memory_out_i;      // from reg1 module
+input   axireg_out_i;      // from reg1 module
 input   fifo_out_i;    // from reg2 module
 input   confreg_out_i;     // from reg4 module
 input   clk_byp_out_i;
@@ -139,7 +139,7 @@ assign shift_dr_o = shift_dr;
 assign update_dr_o = update_dr;
 assign capture_dr_o = capture_dr;
 
-assign memory_sel_o = memory_sel;
+assign axireg_sel_o = memory_sel;
 assign fifo_sel_o = fifo_sel;
 assign confreg_sel_o = confreg_sel;
 
@@ -539,7 +539,7 @@ begin
     begin
       case(latched_jtag_ir_neg)    // synthesis parallel_case
         `IDCODE:            tdo_comb = idcode_tdo;        // Reading ID code
-        `REG1:              tdo_comb = memory_out_i;      // REG1
+        `REG1:              tdo_comb = axireg_out_i;      // REG1
         `REG2:              tdo_comb = fifo_out_i;        // REG2
         `REG3:              tdo_comb = confreg_out_i;     // REG3
         `REG_CLK_BYP:       tdo_comb = confreg_out_i;     // REG4
